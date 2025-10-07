@@ -82,7 +82,6 @@ def buscar_palbra_en_list_anida_extraer_indices(lista:list,palabra)->list:
                 indices.append([i,j])
     return indices
 
-
 def mostrar_datos_indices(lista_A:list,lista_B:list,indices:list, titulo:str):
     "Funcion que recibe dos listas con datos y otra con indices de ubicacion que son los que vamos a buscar y un titulo que lo utilizaremos para mostar antes de los datos"
     print(f"---------- Producto {titulo} precio --------------")
@@ -90,50 +89,90 @@ def mostrar_datos_indices(lista_A:list,lista_B:list,indices:list, titulo:str):
         print("{:<15} $ {:<15}".format(lista_A[i[0]], lista_B[i[0]][i[1]]))
     print("")
 
+# ----------------------------------------------------------------------------------------------------------
+### 3
+
+def promedios(lista:list)->list:
+    "Función que recibe una lista y calcula el promedio para cada producto en la lista anidada y devuelve una lista con esos promedios."
+    promedios = []
+    for fila in lista:
+        suma = 0
+        for numero in fila:
+            suma += numero
+        promedios.append(round(suma / len(fila)))
+    return promedios
+
+def unir_listas(lista_a:list, lista_b:list)->list:
+    "Funcion que recibe dos listas relacionadas  y las une a traves de su indice y devuelve la lista"
+    nueva_lista = []
+    for i in range(len(lista_a)):
+        nueva_lista.append([lista_a[i],lista_b[i]])
+    return nueva_lista
+
+def ordenar_listas(lista:list)->list:
+    "Funcion que recibe una lista  y la ordena de menor a mayor y la retorna"
+    for i in range(len(lista) - 1):
+        for j in range(i, len(lista)):
+            if lista[i][1] > lista[j][1]:
+                aux = lista[i]
+                lista[i] = lista[j]
+                lista[j] = aux
+    return lista
+
+def mostrar_productos(lista:list):
+    "Funcion que muestra  una lista con datos relacionados"
+    print("--------------- Productos ------------")
+    for i in lista:
+        print("{:<10}  $ {:<10}".format(i[0], i[1]))
+
+# ----------------------------------------------------------------------------------------------------------
+### Inicio del program
+inicio = True
+while inicio:
+    menu_opciones()
+    opcion = opcion_validada(1,4)
+    #lOGICA
+    if opcion == 1:
+        ### 1. Solicitar al usuario una Tienda y Listar los productos con los nombres y precios correspondientes.
+        #Le mostramos y le pedimos una opcion al usuario
+        tienda = solicitar_opcion_tienda()
+        #Mostramos
+        print("-------- Productos --------")
+        for i in range(len(productos)):
+            print("{:<15}  $ {:<15}".format(productos[i], precios[i][tienda]))
+        print("")
+    elif opcion == 2:
+        # 2. Mostrar el producto con el precio más alto y el más bajo de todas las tiendas.
+        #Buscamos numero mayor y menor
+        num_mayor = buscar_numero_mayor_o_menor_lista(precios,"mayor")
+        num_menor = buscar_numero_mayor_o_menor_lista(precios,"menor")
+        #Indices de los numeros mayore y menores
+        list_indices_mayor = buscar_palbra_en_list_anida_extraer_indices(precios,num_mayor)
+        list_indices_menor = buscar_palbra_en_list_anida_extraer_indices(precios,num_menor)
+        #Modtramos productio
+        mostrar_datos_indices(productos, precios, list_indices_mayor, "mayor")
+        mostrar_datos_indices(productos, precios, list_indices_menor, "menor")
+    elif opcion == 3:
+        ### 3. Mostrar los productos ordenados por su precio promedio de menor a mayor.
+        #Obtenemos los promedios
+        lista_promedios = promedios(precios)
+        #Unimos los datos
+        lista_datos = unir_listas(productos,lista_promedios)
+        #Ordenamos menor a mayor
+        lista_ordenada = ordenar_listas(lista_datos)
+        #Mostramos
+        mostrar_productos(lista_ordenada)
+    elif opcion == 4:
+        print("Saliendo")
+        inicio = False
 
 
 
 
-# Inicio del program
-menu_opciones()
-opcion = opcion_validada(1,4)
-
-#lOGICA
-if opcion == 1:
-    ### 1. Solicitar al usuario una Tienda y Listar los productos con los nombres y precios correspondientes.
-    #Le mostramos y le pedimos una opcion al usuario
-    tienda = solicitar_opcion_tienda()
-    #Mostramos
-    print("-------- Productos --------")
-    for i in range(len(productos)):
-        print("{:<15}  $ {:<15}".format(productos[i], precios[i][tienda]))
-    print("")
-
-elif opcion == 2:
-    # 2. Mostrar el producto con el precio más alto y el más bajo de todas las tiendas.
-    #Buscamos numero mayor y menor
-    num_mayor = buscar_numero_mayor_o_menor_lista(precios,"mayor")
-    num_menor = buscar_numero_mayor_o_menor_lista(precios,"menor")
-
-    #Indices de los numeros mayore y menores
-    list_indices_mayor = buscar_palbra_en_list_anida_extraer_indices(precios,num_mayor)
-    list_indices_menor = buscar_palbra_en_list_anida_extraer_indices(precios,num_menor)
-
-    #Modtramos productio
-    mostrar_datos_indices(productos, precios, list_indices_mayor, "mayor")
-    mostrar_datos_indices(productos, precios, list_indices_menor, "menor")
 
 
 
 
-elif opcion == 3:
-    # 3. Mostrar los productos ordenados por su precio promedio de menor a mayor.
-
-
-    lista_promedios = promedios(precios)
-    indices_ordenados = ordemar_lista(lista_promedios)
-    lista_promedios = promedios(precios)
-    mostra_una_lista(productos, lista_promedios,indices_ordenados)
 
 
 
