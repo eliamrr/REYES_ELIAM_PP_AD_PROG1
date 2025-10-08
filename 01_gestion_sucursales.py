@@ -17,15 +17,7 @@
 # Todo debe estar claramente comentado/documentado.
 # Debe respetar las reglas de estilo¡
 
-productos = ["Arroz", "Fideos", "Aceite", "Azucar"]
-# Matriz de precios por tienda (cada fila es un producto y cada columna es una tienda)
-precios = [
-    [120, 115, 130],  # Arroz
-    [80, 85, 78],  # Fideos
-    [200, 210, 190],  # Aceite
-    [95, 100, 90]  # Azúcar
-]
-#90
+
 # ----------------------------------------------------------------------------------------------------------
 ### GENERAL
 def menu_opciones():
@@ -62,6 +54,7 @@ def buscar_numero_mayor_o_menor_lista(lista:list,opcion:str)->int:
     "Función que recibe una lista anidada de números y un parámetro de opción (una palabra). Itera para encontrar el número mayor y menor dentro de toda la estructura, y devuelve el valor correspondiente según la opción seleccionada." 
     mayor = lista[0][0]
     menor = lista[0][0]
+    res = mayor
     for fila in lista:
         for i  in fila:
             if mayor < i:
@@ -69,10 +62,10 @@ def buscar_numero_mayor_o_menor_lista(lista:list,opcion:str)->int:
             if menor > i:
                 menor = i
     if opcion == "mayor":
-        return mayor
+        res =  mayor
     elif opcion == "menor":
-        return menor    
-
+        res = menor    
+    return res
 def buscar_palbra_en_list_anida_extraer_indices(lista:list,palabra)->list:
     "Funcion que recibe por parametro una lista y una palabra la cual la buscaremos en la lista y guardaremos en una nueva lista y la retornamos"
     indices = []
@@ -126,8 +119,16 @@ def mostrar_productos(lista:list):
         print("{:<10}  $ {:<10}".format(i[0], i[1]))
 
 # ----------------------------------------------------------------------------------------------------------
-### Inicio del program
+productos = ["Arroz", "Fideos", "Aceite", "Azucar"]
+# Matriz de precios por tienda (cada fila es un producto y cada columna es una tienda)
+precios = [
+    [120, 115, 130],  # Arroz
+    [80, 85, 78],  # Fideos
+    [200, 210, 190],  # Aceite
+    [95, 100, 90]  # Azúcar
+]
 inicio = True
+#Iincio
 while inicio:
     menu_opciones()
     opcion = opcion_validada(1,4)
